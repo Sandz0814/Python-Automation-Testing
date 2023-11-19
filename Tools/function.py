@@ -1,5 +1,5 @@
 import time
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -7,10 +7,15 @@ from selenium.webdriver.common.by import By
 
 class BaseDriver:
 
-    ss_url = "C:\\Users\\Sandz\\PycharmProjects\\DEMO_QA\\screenshot\\"
+    ss_url = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot\\"
+    ss_url_afw = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_afw\\"
 
     def __int__(self, driver):
         self.driver = driver
+
+    def find(self, locator):
+        element = self.driver.find_element(By.XPATH, locator)
+        return element
 
     def page_scroll(self):
         scroll_pause_time = 0.5
@@ -43,8 +48,8 @@ class BaseDriver:
         return elements
 
     def screenshot_image_display(self, locator, image_name):
-        ss_url = "C:\\Users\\Sandz\PycharmProjects\\DEMO_QA\\screenshot\\"
-        field_name = "sandro"
+        ss_url = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot\\"
+        image_name = ""
 
         try:
             element = self.driver.find_element(By.XPATH, locator)
@@ -57,3 +62,25 @@ class BaseDriver:
         except NoSuchElementException as e:
             print(f"Element not found: {e}")
             assert False
+
+    def stale_elements(self, locator):
+        try:
+            element = self.find(locator)
+            return element
+        except StaleElementReferenceException:
+            element = self.find(locator)
+            return element
+
+    def stale_element(self, locator, max_attempts=5,):
+        for attempt in range(max_attempts):
+            try:
+                element = self.find(locator)
+                element.send_keys("Math")
+                return True  # Operation successful
+            except StaleElementReferenceException:
+                print(f"StaleElementReferenceException - Attempt {attempt + 1}")
+
+        print("Exceeded maximum attempts. Operation unsuccessful.")
+        return False
+
+

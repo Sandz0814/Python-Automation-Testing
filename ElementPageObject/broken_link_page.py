@@ -1,3 +1,4 @@
+import time
 from selenium.webdriver.common.by import By
 from Tools.function import BaseDriver
 
@@ -32,6 +33,7 @@ class BrokenLink(BaseDriver):
             self.driver.save_screenshot(self.ss_url + "Broken Link.png")
 
         self.driver.back()
+        time.sleep(2)
 
 
 

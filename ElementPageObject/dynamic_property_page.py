@@ -30,7 +30,9 @@ class DynamicPropertyPage(BaseDriver):
 
     def test_enable_in_5secs(self):
         self.wait(self.enable_in_5secs)
+        time.sleep(5)
         self.wait(self.change_color)
+        time.sleep(5)
         self.wait(self.visible_in_5secs)
 
     def test_assertion(self):
@@ -41,7 +43,9 @@ class DynamicPropertyPage(BaseDriver):
         else:
             self.driver.save_screenshot(self.ss_url + "Dynamic Properties.png")
 
-        time.sleep(10)
+        time.sleep(5)
+        self.driver.close()
+        self.driver.quit()
 
 
 

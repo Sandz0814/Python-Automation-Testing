@@ -1,13 +1,8 @@
 import time
-
-
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException
-
 from Tools.function import BaseDriver
 from faker import Faker
 import random
@@ -24,15 +19,14 @@ class PracticeFormPage(BaseDriver):
     dobs = "//input[@id='dateOfBirthInput']"
     upload_picture = "//input[@id='uploadPicture']"
     current_add = "//textarea[@id='currentAddress']"
-    select_state = "//div[contains(@class,'css-1pahdxg-control')]//div[contains(@class,'css-1hwfws3')]"
+    select_state = "//div[@id='state']"
+    selected_state = "//div[contains(text(),'Uttar Pradesh')]"
     x = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[10]/div[2]/div[1]/div[1]/div[1]/div[1]"
-    select_city = "//div[contains(text(),'Select City')]"
+    select_city = "//body/div[@id='app']/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[10]/div[3]/div[1]/div[1]/div[2]/div[1]/*[1]"
+    selected_city = "//div[contains(text(),'Agra')]"
     submit = "//button[@id='submit']"
-    subject = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[6]/div[2]/div[1]/div[1]"
-    y = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[6]/div[2]/div[1]/div[1]"
-    z = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[6]/div[2]/div[1]/div[1]/div[1]"
-    i = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[6]/div[2]/div[1]/div[1]/div[1]/div[1]"
-    j = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[6]/div[2]/div[1]"
+    confirmation_btn = '//*[@id="closeLargeModal"]'
+    confirmation_text = '//*[@id="example-modal-sizes-title-lg"]'
 
     def __init__(self, driver):
         self.driver = driver
@@ -48,26 +42,6 @@ class PracticeFormPage(BaseDriver):
     def wait(self, locator):
         element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, locator)))
         return element
-
-    def stale_elements(self, locator):
-        try:
-            element = self.find(locator)
-            return element
-        except StaleElementReferenceException:
-            element = self.find(locator)
-            return element
-
-    def stale_element(self, locator, max_attempts=5,):
-        for attempt in range(max_attempts):
-            try:
-                element = self.find(locator)
-                element.send_keys("Math")
-                return True  # Operation successful
-            except StaleElementReferenceException:
-                print(f"StaleElementReferenceException - Attempt {attempt + 1}")
-
-        print("Exceeded maximum attempts. Operation unsuccessful.")
-        return False
 
     def select_random_hobbies(self):
         hobbies = ["Sports", "Reading", "Music"]
@@ -92,18 +66,18 @@ class PracticeFormPage(BaseDriver):
         self.find(self.f_name).send_keys(first_name)
         self.find(self.l_name).send_keys(last_name)
         self.find(self.email).send_keys(email)
-        time.sleep(2)
+        time.sleep(1)
 
     def test_random_gender(self):
         gender = random.choice(["Male", "Female", "Other"])
         self.find(f"//label[text()='{gender}']").click()
-        time.sleep(2)
+        time.sleep(1)
 
     def test_random_mobile(self):
         faker = Faker()
         mobile_number = faker.random_number(11)
         self.find(self.mobile_num).send_keys(mobile_number)
-        time.sleep(2)
+        time.sleep(5)
 
     def test_random_dob(self):
         self.find(self.dobs).click()
@@ -111,31 +85,45 @@ class PracticeFormPage(BaseDriver):
         time.sleep(2)
 
     def test_random_subject(self):
-        self.stale_elements(self.i).send_keys("Math", Keys.ENTER)
-
-        time.sleep(10)
-        self.driver.quit()
+        self.find(self.s).send_keys("Math", Keys.ENTER)
 
     def test_random_hobbies(self):
         self.select_random_hobbies()
+        time.sleep(2)
 
-    def upload_pic(self):
-        self.find(self.upload_picture).send_keys("C:\\Users\\Sandz\\Pictures\\download (1).jfif")
+    def test_upload_pic(self):
+        self.find(self.upload_picture).send_keys("C:\\Users\\Change Me\\Pictures\\sinag.jpg")
 
-    def address(self):
+    def test_address(self):
         faker = Faker()
         current_address = faker.address()
         self.find(self.current_add).send_keys(current_address)
+        time.sleep(2)
 
-    def select_state_and_city(self):
-        state_dropdown = Select(self.find(self.select_state))
-        state_dropdown.select_by_visible_text("NCR")
+    def test_select_state_and_city(self):
+        self.find(self.select_state).click()
+        self.find(self.selected_state).click()
+        time.sleep(2)
+        self.find(self.select_city).click()
+        self.find(self.selected_city).click()
 
-        city_dropdown = Select(self.find(self.select_city))
-        city_dropdown.select_by_visible_text("Delhi")
-
-    def submits(self):
+    def test_submits(self):
         self.find(self.submit).click()
+        time.sleep(2)
+
+    def test_confirmation(self):
+        confirm = self.find(self.confirmation_text).text
+        if "Thanks for submitting the form" not in confirm:
+            assert False
+        else:
+            self.driver.save_screenshot(self.ss_url + "Form submit confirmation.png")
+            assert True
+
+        self.find(self.confirmation_btn).click()
+
+        time.sleep(5)
+        self.driver.close()
+        self.driver.quit()
 
 
 

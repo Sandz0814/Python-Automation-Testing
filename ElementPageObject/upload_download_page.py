@@ -25,7 +25,7 @@ class UploadDownloadPage(BaseDriver):
     def test_download(self):
         self.find(self.download_btn).click()
         time.sleep(1)
-        download_path = "C:\\Users\\Sandz\\Downloads\\"
+        download_path = "C:\\Users\\Change Me\\Downloads\\"
         file_name = "sampleFile.jpeg"  # Replace with the actual file name
 
         file_path = os.path.join(download_path, file_name)
@@ -36,7 +36,7 @@ class UploadDownloadPage(BaseDriver):
             print(f"File '{file_name}' was not found in the download directory.")
 
     def test_uploads(self):
-        self.find(self.upload_btn).send_keys("C:\\Users\\Sandz\\Pictures\\sinag.jpg")
+        self.find(self.upload_btn).send_keys("C:\\Users\\Change Me\\Pictures\\sinag.jpg")
         upload_message = self.find(self.upload_assert).is_displayed()
         if upload_message:
             self.driver.save_screenshot(self.ss_url + "upload.png")
