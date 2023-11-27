@@ -18,9 +18,11 @@ class TextBox(BaseDriver):
 
     def test_element(self):
 
-        self.driver.find_element(By.XPATH, self.element).click()
+        # self.driver.find_element(By.XPATH, self.element).click()
+        self.find(self.element).click()
 
     def test_text_box(self):
+
         self.driver.find_element(By.XPATH, self.textbox).click()
         self.driver.find_element(By.XPATH, self.name_field).send_keys("Sandro")
 
@@ -29,6 +31,8 @@ class TextBox(BaseDriver):
         self.driver.find_element(By.XPATH, self.current_add_field).send_keys(" NPA")
 
         self.driver.find_element(By.XPATH, self.permanent_add_field).send_keys("NPA")
+
+        self.page_scroll()
 
         self.driver.find_element(By.XPATH, self.submit_btn).click()
 

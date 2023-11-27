@@ -22,6 +22,7 @@ class ButtonPage(BaseDriver):
         return element
 
     def test_buttons(self):
+        self.page_scroll()
         self.find_element(self.buttons_btn).click()
         time.sleep(1)
 
@@ -60,6 +61,7 @@ class ButtonPage(BaseDriver):
         else:
             self.driver.save_screenshot(self.ss_url + "Click Me.png")
             assert True
+            self.page_scroll()
 
 
 

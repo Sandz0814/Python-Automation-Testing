@@ -13,7 +13,9 @@ class RadioButton(BaseDriver):
         self.driver = driver
 
     def test_radio_btn(self):
-        self.driver.find_element(By.XPATH, self.radio_btn).click()
+        self.page_scroll()
+        self.wait_until_element_is_clickable(By.XPATH, self.radio_btn).click()
+        # self.driver.find_element(By.XPATH, self.radio_btn).click()
         title = self.driver.find_element(By.XPATH, self.radio_btn_txt).text
         if "Radio Button" not in title:
             assert False
@@ -38,6 +40,7 @@ class RadioButton(BaseDriver):
             self.driver.save_screenshot(self.ss_url + "Radio button Impressive.png")
             assert True
             time.sleep(2)
+            self.page_scroll()
 
 
 

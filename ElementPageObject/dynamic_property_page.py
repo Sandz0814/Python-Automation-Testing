@@ -42,10 +42,10 @@ class DynamicPropertyPage(BaseDriver):
             assert False
         else:
             self.driver.save_screenshot(self.ss_url + "Dynamic Properties.png")
-
-        time.sleep(5)
+        self.page_scroll()
         self.driver.close()
         self.driver.quit()
+
 
 
 

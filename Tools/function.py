@@ -9,9 +9,19 @@ class BaseDriver:
 
     ss_url = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot\\"
     ss_url_afw = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_afw\\"
+    ss_url_widget = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_widget\\"
+    ss_url_interaction = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_interaction\\"
 
     def __int__(self, driver):
         self.driver = driver
+
+    def close(self):
+        close = self.driver.close()
+        return close
+
+    def s_shot(self, url, picture):
+        image = self.driver.save_screenshot(url + picture)
+        return image
 
     def find(self, locator):
         element = self.driver.find_element(By.XPATH, locator)

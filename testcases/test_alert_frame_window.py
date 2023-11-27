@@ -2,6 +2,8 @@ import pytest
 from Alert_farmes_wondows_PageObject.alert_page import AlertPage
 from Alert_farmes_wondows_PageObject.brower_window_page import BrowserWindows
 from Alert_farmes_wondows_PageObject.iframe_page import FramePage
+from Alert_farmes_wondows_PageObject.modal_page import Modal
+from Alert_farmes_wondows_PageObject.nested_frames_page import NestedFrames
 from Tools.function import BaseDriver
 
 
@@ -32,3 +34,17 @@ class TestElements(BaseDriver):
         self.iframe.test_frame_module_btn()
         self.iframe.test_iframe1()
         self.iframe.test_iframe2()
+
+        # Verifying the Nested Iframe module
+        self.nested = NestedFrames(self.driver)
+        self.nested.test_nested_frame_btn()
+        self.nested.test_nested_parent_iframe()
+        self.nested.test_nested_child_iframe()
+
+        # Verifying the Modal module
+        self.modal = Modal(self.driver)
+        self.modal.test_modal_btn()
+        self.modal.test_assert_header_name()
+        self.modal.test_click_small_modal()
+        self.modal.test_click_large_modal()
+

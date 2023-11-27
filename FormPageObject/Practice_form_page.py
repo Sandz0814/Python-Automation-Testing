@@ -22,11 +22,13 @@ class PracticeFormPage(BaseDriver):
     select_state = "//div[@id='state']"
     selected_state = "//div[contains(text(),'Uttar Pradesh')]"
     x = "//body[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[10]/div[2]/div[1]/div[1]/div[1]/div[1]"
-    select_city = "//body/div[@id='app']/div[1]/div[1]/div[2]/div[2]/div[2]/form[1]/div[10]/div[3]/div[1]/div[1]/div[2]/div[1]/*[1]"
+    select_city = ("//body/div[@id='app']/div[1]/div[1]/div[2]/div[2]/div[2]/form"
+                   "[1]/div[10]/div[3]/div[1]/div[1]/div[2]/div[1]/*[1]")
     selected_city = "//div[contains(text(),'Agra')]"
     submit = "//button[@id='submit']"
     confirmation_btn = '//*[@id="closeLargeModal"]'
     confirmation_text = '//*[@id="example-modal-sizes-title-lg"]'
+    subject_input = "//input[@id='subjectsInput']"
 
     def __init__(self, driver):
         self.driver = driver
@@ -85,7 +87,17 @@ class PracticeFormPage(BaseDriver):
         time.sleep(2)
 
     def test_random_subject(self):
-        self.find(self.s).send_keys("Math", Keys.ENTER)
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.presence_of_element_located((By.XPATH, self.subject_input)))
+        # Locate the autocomplete input field by its xpath
+        autocomplete_input = self.driver.find_element(By.XPATH, self.subject_input)
+        # Enter a value into the input field
+        autocomplete_input.send_keys("Mat")
+        autocomplete_input.send_keys(Keys.ENTER)
+        autocomplete_input.send_keys("Sci")
+        autocomplete_input.send_keys(Keys.ENTER)
+        autocomplete_input.send_keys("Eng")
+        autocomplete_input.send_keys(Keys.ENTER)
 
     def test_random_hobbies(self):
         self.select_random_hobbies()
@@ -121,7 +133,8 @@ class PracticeFormPage(BaseDriver):
 
         self.find(self.confirmation_btn).click()
 
-        time.sleep(5)
+        time.sleep(1)
+        self.page_scroll()
         self.driver.close()
         self.driver.quit()
 

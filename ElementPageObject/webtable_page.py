@@ -30,6 +30,7 @@ class WebTablePage(BaseDriver):
         return element
 
     def test_web_table_add_employee(self):
+        self.page_scroll()
         self.find_element(self.web_table_btn).click()
         self.find_element(self.add_btn).click()
         self.find_element(self.f_name).send_keys("Sandro")
@@ -78,6 +79,7 @@ class WebTablePage(BaseDriver):
         else:
             self.driver.save_screenshot(self.ss_url + "Delete employee.png")
             assert True
+            self.page_scroll()
 
 
 

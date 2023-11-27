@@ -14,6 +14,7 @@ class NestedFrames(BaseDriver):
         self.driver = driver
 
     def test_nested_frame_btn(self):
+        self.page_scroll()
         self.find(self.nested_frames_btn).click()
         time.sleep(2)
 
@@ -45,6 +46,9 @@ class NestedFrames(BaseDriver):
         self.driver.save_screenshot(self.ss_url_afw + "Nested Child Iframe.png")
 
         self.driver.switch_to.default_content()
+
+
+
 
 
 

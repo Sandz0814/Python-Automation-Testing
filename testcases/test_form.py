@@ -16,6 +16,7 @@ class TestElement(BaseDriver):
         self.tf.test_random_gender()
         self.tf.test_random_mobile()
         self.tf.test_random_dob()
+        self.tf.test_random_subject()
         self.tf.test_random_hobbies()
         self.tf.test_upload_pic()
         self.tf.test_address()

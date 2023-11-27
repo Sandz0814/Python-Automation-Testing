@@ -51,18 +51,21 @@ class TestElement(BaseDriver):
         self.lp.test_open_link()
         self.lp.test_home_link()
         self.lp.test_created_link()
+        self.page_scroll()
 
         # Verifying the Broken Link Functions
         self.bl = BrokenLink(self.driver)
         self.bl.test_broken_link()
         self.bl.test_click_for_valid_link()
         self.bl.test_click_for_broken_link()
+        self.page_scroll()
 
         # Verifying the Download and Upload function
         self.ud = UploadDownloadPage(self.driver)
         self.ud.test_upload_download()
         self.ud.test_download()
         self.ud.test_uploads()
+        self.page_scroll()
 
         # Verifying the Dynamic properties function
         self.dp = DynamicPropertyPage(self.driver)
