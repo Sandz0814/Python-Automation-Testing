@@ -1,6 +1,8 @@
 import time
 from selenium.webdriver.common.by import By
 from Tools.function import BaseDriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class RadioButton(BaseDriver):
@@ -14,8 +16,8 @@ class RadioButton(BaseDriver):
 
     def test_radio_btn(self):
         self.page_scroll()
-        self.wait_until_element_is_clickable(By.XPATH, self.radio_btn).click()
-        # self.driver.find_element(By.XPATH, self.radio_btn).click()
+        self.find_wait(self.radio_btn)
+        self.find(self.radio_btn).click()
         title = self.driver.find_element(By.XPATH, self.radio_btn_txt).text
         if "Radio Button" not in title:
             assert False

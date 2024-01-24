@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from InteractionPageObject.draggable_page import Draggable
 from InteractionPageObject.droppable_page import Droppable
@@ -7,7 +5,6 @@ from InteractionPageObject.resizable_page import Resizable
 from InteractionPageObject.selectable_page import Selectable
 from InteractionPageObject.sortable_page import Sortable
 from Tools.function import BaseDriver
-from selenium import webdriver
 
 
 @pytest.mark.usefixtures("setup")

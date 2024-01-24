@@ -1,11 +1,6 @@
 import time
-
-from selenium.webdriver.common.by import By
-
 from Tools.function import BaseDriver
 from selenium.webdriver import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class Sortable(BaseDriver):
@@ -30,9 +25,7 @@ class Sortable(BaseDriver):
         self.driver = driver
 
     def test_open_interaction_icon(self):
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.presence_of_element_located((By.XPATH, self.interaction_icon)))
-        wait.until(EC.element_to_be_clickable((By.XPATH, self.interaction_icon)))
+        self.find_wait(self.interaction_icon)
         self.find(self.interaction_icon).click()
 
     def test_open_sortable_module(self):

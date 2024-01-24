@@ -83,7 +83,7 @@ class PracticeFormPage(BaseDriver):
 
     def test_random_dob(self):
         self.find(self.dobs).click()
-        self.find("//div[@aria-label='Choose Thursday, November 30th, 2023']").click()
+        self.find("//div[@aria-label='Choose Tuesday, January 30th, 2024']").click()
         time.sleep(2)
 
     def test_random_subject(self):
@@ -119,6 +119,7 @@ class PracticeFormPage(BaseDriver):
         self.find(self.select_city).click()
         self.find(self.selected_city).click()
 
+
     def test_submits(self):
         self.find(self.submit).click()
         time.sleep(2)
@@ -136,7 +137,7 @@ class PracticeFormPage(BaseDriver):
         time.sleep(1)
         self.page_scroll()
         self.driver.close()
-        self.driver.quit()
+
 
 
 

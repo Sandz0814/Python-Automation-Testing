@@ -11,6 +11,7 @@ class BaseDriver:
     ss_url_afw = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_afw\\"
     ss_url_widget = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_widget\\"
     ss_url_interaction = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_interaction\\"
+    ss_url_bookstore = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot_bookstore\\"
 
     def __int__(self, driver):
         self.driver = driver
@@ -24,8 +25,14 @@ class BaseDriver:
         return image
 
     def find(self, locator):
-        element = self.driver.find_element(By.XPATH, locator)
-        return element
+        wait = WebDriverWait(self.driver, 10)
+
+        wait.until(EC.presence_of_element_located((By.XPATH, locator)))
+        wait.until(EC.element_to_be_clickable((By.XPATH, locator)))
+
+        elements = self.driver.find_element(By.XPATH, locator)
+        x = self.driver.execute_script("arguments[0].scrollIntoView();", elements)
+        return x
 
     def page_scroll(self):
         scroll_pause_time = 0.5
@@ -47,15 +54,21 @@ class BaseDriver:
                 break
             last_height = new_height
 
-    def wait_for_presence_of_all_element(self, locator_type, locator):
+    def wait_presence(self, locator_type, locator):
         list_of_elements = WebDriverWait(self.driver, 10).until(
             EC.presence_of_all_elements_located((locator_type, locator)))
         return list_of_elements
 
-    def wait_until_element_is_clickable(self, locator_type, locator):
+    def wait_clickable(self, locator_type, locator):
         elements = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((locator_type, locator)))
         return elements
+
+    def find_wait(self, locator):
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.presence_of_element_located((By.XPATH, locator)))
+        wait.until(EC.element_to_be_clickable((By.XPATH, locator)))
+        return wait
 
     def screenshot_image_display(self, locator, image_name):
         ss_url = "C:\\Users\\Change Me\\PycharmProjects\\Python-Automation-Testing\\screenshot\\"

@@ -73,5 +73,5 @@ class TestElement(BaseDriver):
         self.dp.test_enable_in_5secs()
         self.dp.test_assertion()
 
-        time.sleep(10)
+
 
